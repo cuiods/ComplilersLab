@@ -38,12 +38,100 @@ public class Analyzer {
                             state = State.STATE_1;
                             tempWord += current;
                         } else if (Constant.isOperator(current)) {
-                            addToken(current+"",Catalog.OPERATOR);
-                            state = State.STATE_0;
+                            state = State.STATE_3;
+                            tempWord += current;
+                        } else if (Constant.isSeparator(current)) {
+                            state = State.STATE_3;
+                            tempWord += current;
                         }
+                        break;
+                    case STATE_1:
+                        if (Constant.isDigit(current)) {
+                            tempWord += current;
+                        } else if (Constant.isLetter(current)) {
+                            tempWord += current;
+                        } else {
+                            index--;
+                            state = State.STATE_0;
+                            if (Constant.isKeyword(tempWord)) {
+                                addToken(tempWord, Catalog.KEYWORD);
+                            } else {
+                                addToken(tempWord, Catalog.ID);
+                            }
+                            tempWord = "";
+                        }
+                        break;
+                    case STATE_2:
+                        if (Constant.isDigit(current)) {
+                            tempWord += current;
+                        } else if (current=='.') {
+                            tempWord += current;
+                            state = State.STATE_4;
+                        } else {
+                            index--;
+                            state = State.STATE_0;
+                            addToken(tempWord, Catalog.INT);
+                            tempWord = "";
+                        }
+                        break;
+                    case STATE_3:
+                        index--;
+                        state = State.STATE_0;
+                        if (Constant.isOperator(tempWord.charAt(0))) {
+                            addToken(tempWord, Catalog.OPERATOR);
+                        } else {
+                            addToken(tempWord, Catalog.SEPARATOR);
+                        }
+                        tempWord = "";
+                        break;
+                    case STATE_4:
+                        if (Constant.isDigit(current)) {
+                            state = State.STATE_5;
+                            tempWord += current;
+                        } else {
+                            System.out.println("error: state 4");
+                        }
+                        break;
+                    case STATE_5:
+                        if (Constant.isDigit(current)) {
+                            tempWord += current;
+                        } else {
+                            index --;
+                            state = State.STATE_0;
+                            addToken(tempWord, Catalog.DOUBLE);
+                            tempWord="";
+                        }
+                        break;
                 }
                 index++;
             }
+            switch (state) {
+                case STATE_1:
+                    if (Constant.isKeyword(tempWord)) {
+                        addToken(tempWord, Catalog.KEYWORD);
+                    } else {
+                        addToken(tempWord, Catalog.ID);
+                    }
+                    break;
+                case STATE_2:
+                    addToken(tempWord, Catalog.INT);
+                    break;
+                case STATE_3:
+                    if (tempWord.length()>0) {
+                        if (Constant.isOperator(tempWord.charAt(0))) {
+                            addToken(tempWord, Catalog.OPERATOR);
+                        } else {
+                            addToken(tempWord, Catalog.SEPARATOR);
+                        }
+                    }
+                    break;
+                case STATE_5:
+                    addToken(tempWord, Catalog.DOUBLE);
+                    break;
+            }
+        }
+        for (Token token: tokens) {
+            System.out.println(token);
         }
     }
 
