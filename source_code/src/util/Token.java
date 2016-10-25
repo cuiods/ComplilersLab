@@ -14,6 +14,9 @@ public class Token {
      * certain lexeme
      */
     private String lexeme;
+    /**
+     * type code
+     */
     private int index;
 
     public Token(Catalog catalog, String lexeme, int index) {
