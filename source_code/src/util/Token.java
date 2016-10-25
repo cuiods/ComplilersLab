@@ -41,7 +41,7 @@ public class Token {
     @Override
     public String toString() {
         if (index>=0) {
-            return "("+catalog+index+","+lexeme+")";
+            return "("+catalog+"_"+index+","+lexeme+")";
         }
         return "("+catalog+","+lexeme+")";
     }

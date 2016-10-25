@@ -4,6 +4,9 @@ public class Main() {
         int a = 10;
         a += 10;
         double b = 123.45;
+        if (a == 20) {
+            a >> 2;
+        }
         System.out.println(10 * 123.45 + 12 - a * b);
     }
 }
