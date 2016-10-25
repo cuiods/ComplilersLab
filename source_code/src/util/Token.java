@@ -14,10 +14,12 @@ public class Token {
      * certain lexeme
      */
     private String lexeme;
+    private int index;
 
-    public Token(Catalog catalog, String lexeme) {
+    public Token(Catalog catalog, String lexeme, int index) {
         this.catalog = catalog;
         this.lexeme = lexeme;
+        this.index = index;
     }
 
     public Catalog getCatalog() {
@@ -38,6 +40,9 @@ public class Token {
 
     @Override
     public String toString() {
+        if (index>=0) {
+            return "("+catalog+index+","+lexeme+")";
+        }
         return "("+catalog+","+lexeme+")";
     }
 }

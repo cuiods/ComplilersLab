@@ -2,6 +2,7 @@ public class Main() {
 
     public static void main (String[] args) {
         int a = 10;
+        a += 10;
         double b = 123.45;
         System.out.println(10 * 123.45 + 12 - a * b);
     }
