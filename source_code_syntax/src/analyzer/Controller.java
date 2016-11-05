@@ -41,6 +41,7 @@ public class Controller {
                         case SHIFT:
                             stateStack.push(unit.getNum());
                             tagStack.push(tag);
+                            System.out.print("shift "+unit.getNum()+"  ");
                             break;
                         case REDUCE:
                             i--;
@@ -51,11 +52,14 @@ public class Controller {
                             }
                             tagStack.push(cfg.getLeft());
                             stateStack.push(ppt.getGoto(stateStack.peek(),cfg.getLeft()));
+                            System.out.print("reduce "+cfg+" ");
                             break;
                         case ACCEPT:
+                            System.out.println("parse succeed!");
                             break loop;
                         case NULL:
                             System.out.println("Unknown Error!");
+                            break loop;
                     }
                     printStack();
                 }

@@ -28,4 +28,9 @@ public class CFG {
     public void setRight(String right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return left+"="+right;
+    }
 }
